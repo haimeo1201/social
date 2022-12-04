@@ -23,8 +23,19 @@ const getPost = async (req, res) => {
     });
     res.json(post);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     res.sendStatus(500);
   }
 };
-module.exports = { getPost };
+
+const addFriend = async (req, res) => {
+  const friendId = req.body.id;
+  const id = req.id;
+  try {
+    await db.user.update({});
+  } catch (e) {
+    console.error(e);
+    res.sendStatus(500);
+  }
+};
+module.exports = { getPost, addFriend };
