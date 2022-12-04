@@ -35,7 +35,7 @@ const register = async (req, res) => {
       },
     });
     if (user) {
-      res.sendStatus(403).send("user exist");
+      res.sendStatus(403);
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       await db.user.create({
