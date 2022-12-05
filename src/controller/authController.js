@@ -1,6 +1,9 @@
 const db = require("../db/config.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+/**
+ * Login using email and password
+ */
 const login = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -22,9 +25,13 @@ const login = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    res.status(500).send("Something wrong while querying");
   }
 };
+/**
+ * Create new account using email and password.
+ * Email must be unique
+ */
 const register = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -35,7 +42,7 @@ const register = async (req, res) => {
       },
     });
     if (user) {
-      res.sendStatus(403);
+      res.status(403).send("Email already existed");
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       await db.user.create({
@@ -44,23 +51,25 @@ const register = async (req, res) => {
           password: hashedPassword,
         },
       });
-      res.sendStatus(201);
+      res.status(201).send("Create user successfully");
     }
   } catch (err) {
     console.error(err);
-    res.sendStatus(500);
+    res.status(500).send("Something wrong while querying");
   }
 };
-
+/**
+ * Middleware for authorization
+ */
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
+  if (token == null) return res.status(401).send("token missing");
 
   jwt.verify(token, "banxinhxinh", (err, id) => {
     if (err) {
       console.error(err);
-      return res.sendStatus(403);
+      return res.status(403).send("invalid token");
     }
     req.id = parseInt(id, 10);
     next();

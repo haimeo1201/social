@@ -4,6 +4,13 @@ const express = require("express");
 const router = express.Router();
 /**
  * @swagger
+ * tags:
+ *  name: Auth route
+ *  description: Authenticate
+ */
+
+/**
+ * @swagger
  * components:
  *   schemas:
  *     User:
@@ -30,12 +37,10 @@ const router = express.Router();
 router.post("/register", register);
 /**
  * @swagger
- * tags:
- *  name: Register
- *  description: Register new user
  * /api/auth/register:
  *  post:
- *      tags: [Register]
+ *      tags: [Auth route]
+ *      summary: Register new user
  *      requestBody:
  *          required: true
  *          content:
@@ -62,12 +67,10 @@ router.post("/login", login);
 
 /**
  * @swagger
- * tags:
- *  name: Login
- *  description: Login using email and password
  * /api/auth/login:
  *  post:
- *      tags: [Login]
+ *      tags: [Auth route]
+ *      summary: Login using email and password
  *      requestBody:
  *          required: true
  *          content:
