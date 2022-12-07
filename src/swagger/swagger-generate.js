@@ -39,69 +39,21 @@
  *         id: 1
  *         email: alice@123
  *         password: 123
- * /api/users/getPost:
+ * /api/user/getAllPostFromUser:
  *  get:
  *      tags: [Users route]
  *      summary: Get all post of current user
  *      responses:
  *          200:
- *              description: Send back all posts
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/users/addFriend:
- *  post:
- *      tags: [Users route]
- *      summary: Add a user to friend lists and the other user also add you to their friend lists
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          id:
- *                              type: integer
- *                              default: 1
- *      responses:
- *          201:
- *              description: Added friend succesfully
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/users/getFriendList:
+ *              description: Get all post successfully
+ * /api/user/getUserFriendList:
  *  get:
  *      tags: [Users route]
  *      summary: Get your current friends lists
  *      responses:
  *          200:
- *              description: Return list of friends
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/users/newsFeed:
- *  get:
- *      tags: [Users route]
- *      summary: Get the news feed provided by all of yours post and your friends'
- *      responses:
- *          200:
- *              description: Return news feed
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/posts/addPost:
+ *              description: Get friend list successfully
+ * /api/post/addPost:
  *  post:
  *      tags: [Posts route]
  *      summary: Post something
@@ -113,18 +65,12 @@
  *                      type: object
  *                      properties:
  *                          content:
- *                              type: text
+ *                              type: string
  *                              default: anh yeu em nhieu lam
  *      responses:
- *          201:
+ *          200:
  *              description: Create post succesfully
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/posts/addLike:
+ * /api/post/addLikeToPost:
  *  post:
  *      tags: [Posts route]
  *      summary: Like a post
@@ -139,15 +85,9 @@
  *                              type: integer
  *                              default: 1
  *      responses:
- *          201:
+ *          200:
  *              description: Like post succesfully
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
- * /api/posts/addComment:
+ * /api/post/addCommentToPost:
  *  post:
  *      tags: [Posts route]
  *      summary: Comment on a post
@@ -159,20 +99,14 @@
  *                      type: object
  *                      properties:
  *                          content:
- *                              type: text
+ *                              type: string
  *                              default: bài post của bạn rất hay
  *                          postId:
  *                              type: integer
  *                              default: 1
  *      responses:
- *          201:
+ *          200:
  *              description: Comment succesfully
- *          401:
- *              description: Unauthenticated request
- *          403:
- *              description: Unauthorized request
- *          500:
- *              description: Something wrong while querying
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]

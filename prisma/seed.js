@@ -5,6 +5,7 @@ async function main() {
     data: {
       email: "alice@123",
       password: "$2a$10$NmM5.4RwQKjgSavmyaQaXedenpPeUffMAbtU04WVypVrXlZuV33yW",
+      isAdmin: true,
       profile: {
         create: {
           bio: "alice in",
@@ -24,6 +25,7 @@ async function main() {
     data: {
       email: "bob@123",
       password: "$2a$10$NmM5.4RwQKjgSavmyaQaXedenpPeUffMAbtU04WVypVrXlZuV33yW",
+      isAdmin: false,
       profile: {
         create: {
           bio: "bob in",
@@ -50,7 +52,6 @@ async function main() {
       },
     ],
   });
-  console.log(alice, bob, post);
 }
 main()
   .then(async () => {
