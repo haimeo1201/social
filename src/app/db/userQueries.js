@@ -2,6 +2,35 @@ const db = require("./database");
 const newError = require("../utils/newError");
 
 class userQueries {
+  async getUserByEmail(email) {
+    try {
+      const result = await db.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createNewUser(email, password) {
+    try {
+      const result = await db.user.create({
+        data: {
+          email: email,
+          password: password,
+        },
+      });
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getAllPostFromUser(userId) {
     try {
       const result = await db.post.findMany({

@@ -1,6 +1,7 @@
 const userQueries = require("../db/userQueries");
 
 class userController {
+  /** [GET] */
   async getAllPostFromUser(req, res) {
     try {
       const result = await userQueries.getAllPostFromUser(req.id);
@@ -14,6 +15,7 @@ class userController {
     }
   }
 
+  /** [GET] */
   async getUserFriendList(req, res) {
     try {
       const result = await userQueries.getUserFriendList(req.id);

@@ -28,7 +28,7 @@ class postQueries {
 
       if (existedLike !== null) {
         throw newError({
-          error: 10401,
+          error: 10301,
           message: "Already liked this post",
           data: [],
         });

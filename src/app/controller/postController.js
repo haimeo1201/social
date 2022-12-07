@@ -3,6 +3,7 @@ const validateBodySchema = require("../utils/validateBodySchema");
 const postQueries = require("../db/postQueries");
 
 class postController {
+  /** [POST] */
   async addPost(req, res) {
     const bodySchema = {
       type: "object",
@@ -17,7 +18,7 @@ class postController {
     const invalid = validateBodySchema(
       bodySchema,
       req.body,
-      10400,
+      10300,
       "Invalid add post request body"
     );
 
@@ -40,6 +41,7 @@ class postController {
     }
   }
 
+  /** [POST] */
   async addLikeToPost(req, res) {
     const bodySchema = {
       type: "object",
@@ -54,7 +56,7 @@ class postController {
     const invalid = validateBodySchema(
       bodySchema,
       req.body,
-      10400,
+      10300,
       "Invalid like post request body"
     );
 
@@ -77,6 +79,7 @@ class postController {
     }
   }
 
+  /** [POST] */
   async addCommentToPost(req, res) {
     const bodySchema = {
       type: "object",
@@ -94,7 +97,7 @@ class postController {
     const invalid = validateBodySchema(
       bodySchema,
       req.body,
-      10400,
+      10300,
       "Invalid comment to post request body"
     );
 

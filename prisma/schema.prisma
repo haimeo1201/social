@@ -42,7 +42,7 @@ model Profile {
 model User {
   id          Int       @id @default(autoincrement())
   email       String    @unique
-  isAdmin     Boolean
+  role    Role      @default(USER)
   posts       Post[]
   comments    Comment[]
   likes       Likes[]
@@ -59,4 +59,9 @@ model Likes {
   authorId Int
   post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   Int
+}
+
+enum Role {
+  USER
+  ADMIN
 }

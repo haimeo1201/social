@@ -1,78 +1,163 @@
-const db = require("../db/database.js");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-/**
- * Login using email and password
- */
-const login = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        email: email,
+
+const validateBodySchema = require("../utils/validateBodySchema");
+
+const userQueries = require("../db/userQueries");
+const authMethod = require("../authentication/authMethod");
+
+class authController {
+  /** [POST] */
+  async login(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        password: {
+          type: "string",
+          nullable: false,
+        },
+        email: {
+          type: "string",
+          nullable: false,
+        },
       },
-    });
-    if (user) {
-      if (await bcrypt.compare(password, user.password)) {
-        const accessToken = jwt.sign(user.id, "banxinhxinh");
-        res.json({ accessToken: accessToken });
-      } else {
-        res.sendStatus(403).send("Not Allowed");
-      }
-    } else {
-      res.status(404).send("Cannot find user");
+      required: ["password", "email"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10100,
+      "Invalid login request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Something wrong while querying");
-  }
-};
-/**
- * Create new account using email and password.
- * Email must be unique
- */
-const register = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-    if (user) {
-      res.status(403).send("Email already existed");
-    } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      await db.user.create({
+
+    try {
+      const email = req.body.email;
+      const password = req.body.password;
+
+      const user = await userQueries.getUserByEmail(email);
+
+      if (user === null) {
+        res.json({
+          error: 10101,
+          message: "This account doesn't exist",
+          data: [],
+        });
+
+        return;
+      }
+
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+
+      if (!isPasswordValid) {
+        res.json({
+          error: 10102,
+          message: "Password is not correct",
+          data: [],
+        });
+
+        return;
+      }
+
+      const dataForAccessToken = {
+        id: user.id,
+        role: user.role,
+      };
+
+      const accessTokenLife = "300m";
+
+      const accessToken = await authMethod.generateToken(
+        dataForAccessToken,
+        accessTokenLife
+      );
+
+      if (!accessToken) {
+        res.json({
+          error: 10103,
+          message: "Login fail",
+          data: [],
+        });
+
+        return;
+      }
+
+      res.json({
+        error: 0,
+        message: "Login successfully",
         data: {
-          email: email,
-          password: hashedPassword,
+          accessToken: accessToken,
+          id: user.id,
+          email: user.email,
+          userType: user.role,
         },
       });
-      res.status(201).send("Create user successfully");
+    } catch (error) {
+      res.json(error);
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Something wrong while querying");
   }
-};
-/**
- * Middleware for authorization
- */
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.status(401).send("token missing");
 
-  jwt.verify(token, "banxinhxinh", (err, id) => {
-    if (err) {
-      console.error(err);
-      return res.status(403).send("invalid token");
+  /** [POST] */
+  async register(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        password: {
+          type: "string",
+          nullable: false,
+        },
+        email: {
+          type: "string",
+          nullable: false,
+        },
+      },
+      required: ["password", "email"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10100,
+      "Invalid register request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
     }
-    req.id = parseInt(id, 10);
-    next();
-  });
+
+    try {
+      const email = req.body.email;
+      const password = bcrypt.hashSync(req.body.password, 10);
+
+      const user = await userQueries.getUserByEmail(email);
+
+      if (user !== null) {
+        res.json({
+          error: 10104,
+          message: "This email already existed",
+          data: [],
+        });
+
+        return;
+      }
+
+      const newUser = await userQueries.createNewUser(email, password);
+
+      res.json({
+        error: 0,
+        message: "Register successfully",
+        data: newUser,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
-module.exports = { login, register, authenticateToken };
+
+module.exports = new authController();

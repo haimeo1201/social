@@ -3,14 +3,10 @@ const route = express.Router();
 
 const postController = require("../app/controller/postController");
 
-const { authenticateToken } = require("../app/controller/authController");
+const { isAuth } = require("../app/authentication/authMiddleware");
 
-route.post("/addPost", authenticateToken, postController.addPost);
-route.post("/addLikeToPost", authenticateToken, postController.addLikeToPost);
-route.post(
-  "/addCommentToPost",
-  authenticateToken,
-  postController.addCommentToPost
-);
+route.post("/addPost", isAuth, postController.addPost);
+route.post("/addLikeToPost", isAuth, postController.addLikeToPost);
+route.post("/addCommentToPost", isAuth, postController.addCommentToPost);
 
 module.exports = route;

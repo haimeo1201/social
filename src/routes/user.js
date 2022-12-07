@@ -3,18 +3,9 @@ const route = express.Router();
 
 const userController = require("../app/controller/userController");
 
-const { authenticateToken } = require("../app/controller/authController");
+const { isAuth } = require("../app/authentication/authMiddleware");
 
-route.get(
-  "/getAllPostFromUser",
-  authenticateToken,
-  userController.getAllPostFromUser
-);
-
-route.get(
-  "/getUserFriendList",
-  authenticateToken,
-  userController.getUserFriendList
-);
+route.get("/getAllPostFromUser", isAuth, userController.getAllPostFromUser);
+route.get("/getUserFriendList", isAuth, userController.getUserFriendList);
 
 module.exports = route;

@@ -127,10 +127,6 @@
  *      responses:
  *          201:
  *              description: Create user succesfully
- *          403:
- *              description: No user match email provided
- *          500:
- *              description: Something wrong while querying
  * /api/auth/login:
  *  post:
  *      tags: [Auth route]
@@ -151,8 +147,4 @@
  *      responses:
  *          200:
  *              description: Login successfully, return a token
- *          403:
- *              description: No user match email provided
- *          500:
- *              description: Something wrong while querying
  */
