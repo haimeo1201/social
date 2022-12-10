@@ -8,10 +8,10 @@ const port = process.env.PORT;
 const frontendPort = process.env.FRONTEND_URL;
 
 app.use(
-  cors({
-    origin: [frontendPort],
-    credentials: true,
-  })
+    cors({
+        origin: [frontendPort],
+        credentials: true,
+    })
 );
 
 app.use(express.json());
@@ -19,5 +19,5 @@ app.use(express.json());
 routes(app);
 
 app.listen(port, () => {
-  console.log("listen at port " + port);
+    console.log("listen at port " + port);
 });

@@ -46,6 +46,13 @@
  *      responses:
  *          200:
  *              description: Get all post successfully
+ * /api/user/getAllPostFromAllUser:
+ *  get:
+ *      tags: [Users route]
+ *      summary: Get all post of all user
+ *      responses:
+ *          200:
+ *              description: Get all post successfully
  * /api/user/getUserFriendList:
  *  get:
  *      tags: [Users route]
@@ -107,6 +114,40 @@
  *      responses:
  *          200:
  *              description: Comment succesfully
+ * /api/post/removePost:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Remove a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          postId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Remove post succesfully
+ * /api/post/removeCommentFromPost:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Remove a comment from a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          commentId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Remove comment succesfully
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]

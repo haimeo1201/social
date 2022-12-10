@@ -11,21 +11,21 @@ addFormats(ajv);
  * @returns Return error object if invalid, false if valid.
  */
 function validateBodySchema(schema, request, errorCode, errorMessage) {
-  try {
-    const valid = ajv.validate(schema, request);
+    try {
+        const valid = ajv.validate(schema, request);
 
-    if (!valid) {
-      return {
-        error: errorCode,
-        message: errorMessage,
-        data: ajv.errors,
-      };
+        if (!valid) {
+            return {
+                error: errorCode,
+                message: errorMessage,
+                data: ajv.errors,
+            };
+        }
+    } catch (e) {
+        console.log("Ajv error: " + e);
     }
-  } catch (e) {
-    console.log("Ajv error: " + e);
-  }
 
-  return false;
+    return false;
 }
 
 module.exports = validateBodySchema;

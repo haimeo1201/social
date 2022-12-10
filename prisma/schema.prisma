@@ -2,66 +2,66 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model Post {
-  id        Int       @id @default(autoincrement())
-  updatedAt DateTime  @default(now()) @updatedAt
-  content   String    @db.Text
-  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  Int
-  comments  Comment[]
-  likes     Likes[]
+    id        Int       @id @default(autoincrement())
+    updatedAt DateTime  @default(now()) @updatedAt
+    content   String    @db.Text
+    author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId  Int
+    comments  Comment[]
+    likes     Likes[]
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  updatedAt DateTime @default(now()) @updatedAt
-  content   String   @db.Text
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId  Int
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    Int
+    id        Int      @id @default(autoincrement())
+    updatedAt DateTime @default(now()) @updatedAt
+    content   String   @db.Text
+    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId  Int
+    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    Int
 }
 
 model Profile {
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int     @unique
-  name   String
-  gender String
-  age    Int
+    bio    String?
+    user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId Int     @unique
+    name   String
+    gender String
+    age    Int
 }
 
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  role    Role      @default(USER)
-  posts       Post[]
-  comments    Comment[]
-  likes       Likes[]
-  profile     Profile?
-  password    String
-  hasFriends  User[]    @relation("friends")
-  friendsWith User[]    @relation("friends")
+    id          Int       @id @default(autoincrement())
+    email       String    @unique
+    role        Role      @default(USER)
+    posts       Post[]
+    comments    Comment[]
+    likes       Likes[]
+    profile     Profile?
+    password    String
+    hasFriends  User[]    @relation("friends")
+    friendsWith User[]    @relation("friends")
 }
 
 model Likes {
-  id       Int      @id @default(autoincrement())
-  created  DateTime @default(now())
-  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId Int
-  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId   Int
+    id       Int      @id @default(autoincrement())
+    created  DateTime @default(now())
+    author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId Int
+    post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId   Int
 }
 
 enum Role {
-  USER
-  ADMIN
+    USER
+    ADMIN
 }
