@@ -42,92 +42,6 @@ class postController {
     }
 
     /** [POST] */
-    async addLikeToPost(req, res) {
-        const bodySchema = {
-            type: "object",
-            properties: {
-                postId: {
-                    type: "integer",
-                },
-            },
-            required: ["postId"],
-        };
-
-        const invalid = validateBodySchema(
-            bodySchema,
-            req.body,
-            10300,
-            "Invalid like post request body"
-        );
-
-        if (invalid !== false) {
-            res.json(invalid);
-
-            return;
-        }
-
-        try {
-            const result = await postQueries.addLikeToPost(
-                req.id,
-                req.body.postId
-            );
-
-            res.json({
-                error: 0,
-                message: "Like post successfully",
-                data: result,
-            });
-        } catch (error) {
-            res.json(error);
-        }
-    }
-
-    /** [POST] */
-    async addCommentToPost(req, res) {
-        const bodySchema = {
-            type: "object",
-            properties: {
-                content: {
-                    type: "string",
-                },
-                postId: {
-                    type: "integer",
-                },
-            },
-            required: ["content", "postId"],
-        };
-
-        const invalid = validateBodySchema(
-            bodySchema,
-            req.body,
-            10300,
-            "Invalid comment to post request body"
-        );
-
-        if (invalid !== false) {
-            res.json(invalid);
-
-            return;
-        }
-
-        try {
-            const result = await postQueries.addCommentToPost(
-                req.id,
-                req.body.postId,
-                req.body.content
-            );
-
-            res.json({
-                error: 0,
-                message: "Comment to successfully",
-                data: result,
-            });
-        } catch (error) {
-            res.json(error);
-        }
-    }
-
-    /** [POST] */
     async removePost(req, res) {
         const bodySchema = {
             type: "object",
@@ -181,6 +95,51 @@ class postController {
                     data: [],
                 });
             }
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
+    /** [POST] */
+    async addCommentToPost(req, res) {
+        const bodySchema = {
+            type: "object",
+            properties: {
+                content: {
+                    type: "string",
+                },
+                postId: {
+                    type: "integer",
+                },
+            },
+            required: ["content", "postId"],
+        };
+
+        const invalid = validateBodySchema(
+            bodySchema,
+            req.body,
+            10300,
+            "Invalid comment to post request body"
+        );
+
+        if (invalid !== false) {
+            res.json(invalid);
+
+            return;
+        }
+
+        try {
+            const result = await postQueries.addCommentToPost(
+                req.id,
+                req.body.postId,
+                req.body.content
+            );
+
+            res.json({
+                error: 0,
+                message: "Comment to successfully",
+                data: result,
+            });
         } catch (error) {
             res.json(error);
         }
@@ -256,6 +215,48 @@ class postController {
                     data: [],
                 });
             }
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
+    /** [POST] */
+    async togglePostLike(req, res) {
+        const bodySchema = {
+            type: "object",
+            properties: {
+                postId: {
+                    type: "integer",
+                },
+            },
+            required: ["postId"],
+        };
+
+        const invalid = validateBodySchema(
+            bodySchema,
+            req.body,
+            10300,
+            "Invalid like post request body"
+        );
+
+        if (invalid !== false) {
+            res.json(invalid);
+
+            return;
+        }
+
+        try {
+            const result = await postQueries.togglePostLike(
+                req.id,
+                req.body.postId
+            );
+            console.log(result);
+
+            res.json({
+                error: 0,
+                message: "Like status changed successfully",
+                data: result,
+            });
         } catch (error) {
             res.json(error);
         }

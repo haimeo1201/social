@@ -77,10 +77,10 @@
  *      responses:
  *          200:
  *              description: Create post succesfully
- * /api/post/addLikeToPost:
+ * /api/post/removePost:
  *  post:
  *      tags: [Posts route]
- *      summary: Like a post
+ *      summary: Remove a post
  *      requestBody:
  *          required: true
  *          content:
@@ -93,7 +93,7 @@
  *                              default: 1
  *      responses:
  *          200:
- *              description: Like post succesfully
+ *              description: Remove post succesfully
  * /api/post/addCommentToPost:
  *  post:
  *      tags: [Posts route]
@@ -114,23 +114,6 @@
  *      responses:
  *          200:
  *              description: Comment succesfully
- * /api/post/removePost:
- *  post:
- *      tags: [Posts route]
- *      summary: Remove a post
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          postId:
- *                              type: integer
- *                              default: 1
- *      responses:
- *          200:
- *              description: Remove post succesfully
  * /api/post/removeCommentFromPost:
  *  post:
  *      tags: [Posts route]
@@ -148,6 +131,23 @@
  *      responses:
  *          200:
  *              description: Remove comment succesfully
+ * /api/post/togglePostLike:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Toggle like on a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          postId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Like post succesfully
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]

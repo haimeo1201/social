@@ -46,27 +46,11 @@ class postQueries {
         }
     }
 
-    async addLikeToPost(authorId, postId) {
+    async removePost(postId) {
         try {
-            const existedLike = await db.likes.findFirst({
+            const result = await db.post.delete({
                 where: {
-                    postId: postId,
-                    authorId: authorId,
-                },
-            });
-
-            if (existedLike !== null) {
-                throw newError({
-                    error: 10301,
-                    message: "Already liked this post",
-                    data: [],
-                });
-            }
-
-            const result = await db.likes.create({
-                data: {
-                    postId: postId,
-                    authorId: authorId,
+                    id: postId,
                 },
             });
 
@@ -92,11 +76,11 @@ class postQueries {
         }
     }
 
-    async removePost(postId) {
+    async removeCommentFromPost(commentId) {
         try {
-            const result = await db.post.delete({
+            const result = await db.comment.delete({
                 where: {
-                    id: postId,
+                    id: commentId,
                 },
             });
 
@@ -106,13 +90,27 @@ class postQueries {
         }
     }
 
-    async removeCommentFromPost(commentId) {
+    async togglePostLike(authorId, postId) {
         try {
-            const result = await db.comment.delete({
+            const existedLike = await db.likes.findFirst({
                 where: {
-                    id: commentId,
+                    postId: postId,
+                    authorId: authorId,
                 },
             });
+
+            const result = existedLike
+                ? await db.likes.delete({
+                      where: {
+                          id: existedLike.id,
+                      },
+                  })
+                : await db.likes.create({
+                      data: {
+                          postId: postId,
+                          authorId: authorId,
+                      },
+                  });
 
             return result;
         } catch (error) {
