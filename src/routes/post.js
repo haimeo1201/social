@@ -9,10 +9,11 @@ route.post("/addPost", isAuth, postController.addPost);
 route.post("/removePost", isAuth, postController.removePost);
 route.post("/addCommentToPost", isAuth, postController.addCommentToPost);
 route.post(
-    "/removeCommentFromPost",
-    isAuth,
-    postController.removeCommentFromPost
+  "/removeCommentFromPost",
+  isAuth,
+  postController.removeCommentFromPost
 );
 route.post("/togglePostLike", isAuth, postController.togglePostLike);
-
+route.post("/sharePost", isAuth, postController.sharePost);
+route.get("/getPostById", isAuth, postController.getPostById);
 module.exports = route;

@@ -60,6 +60,88 @@
  *      responses:
  *          200:
  *              description: Get friend list successfully
+ * /api/user/getNewsFeed:
+ *  get:
+ *      tags: [Users route]
+ *      summary: Get all your friends' and your posts
+ *      responses:
+ *          200:
+ *              description: Get friend list successfully
+ * /api/user/getFriendRequest:
+ *  get:
+ *     tags: [Users route]
+ *     summary: Get all friend request
+ *     responses:
+ *      200:
+ *          description: Get friend request successfully
+ * /api/user/sendFriendRequest:
+ *  post:
+ *     tags: [Users route]
+ *     summary: Send a friend request
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          friendId:
+ *                              type: integer
+ *                              default: 2
+ *     responses:
+ *          200:
+ *              description: Send friend request successfully
+ * /api/user/acceptFriendRequest:
+ *  post:
+ *     tags: [Users route]
+ *     summary: Accept a friend request
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          friendId:
+ *                              type: integer
+ *                              default: 2
+ *     responses:
+ *          200:
+ *              description: Accept friend request successfully
+ * /api/user/removeFriend:
+ *  post:
+ *     tags: [Users route]
+ *     summary: Remove a friend
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          friendId:
+ *                              type: integer
+ *                              default: 2
+ *     responses:
+ *          200:
+ *              description: Remove friend successfully
+ * /api/post/getPostById:
+ *  get:
+ *      tags: [Posts route]
+ *      summary: Get a post by id
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          postId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Accept friend request successfully
  * /api/post/addPost:
  *  post:
  *      tags: [Posts route]
@@ -111,6 +193,26 @@
  *                          postId:
  *                              type: integer
  *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Comment succesfully
+ * /api/post/sharePost:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Share a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          content:
+ *                              type: string
+ *                              default: bài post của bạn rất hay
+ *                          postId:
+ *                              type: integer
+ *                              default: 2
  *      responses:
  *          200:
  *              description: Comment succesfully

@@ -11,13 +11,18 @@ datasource db {
 }
 
 model Post {
-    id        Int       @id @default(autoincrement())
-    updatedAt DateTime  @default(now()) @updatedAt
-    content   String    @db.Text
-    author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    authorId  Int
-    comments  Comment[]
-    likes     Likes[]
+    id            Int            @id @default(autoincrement())
+    updatedAt     DateTime       @default(now()) @updatedAt
+    content       String         @db.Text
+    author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId      Int
+    comments      Comment[]
+    likes         Likes[]
+    sharedFrom    Post?          @relation("ParentChild", fields: [sharedId], references: [id], onDelete: Cascade)
+    listShare     Post[]         @relation("ParentChild")
+    sharedId      Int?
+    notifications Notification[]
+    reports       Report[]
 }
 
 model Comment {
@@ -34,22 +39,28 @@ model Profile {
     bio    String?
     user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId Int     @unique
-    name   String
     gender String
     age    Int
 }
 
 model User {
-    id          Int       @id @default(autoincrement())
-    email       String    @unique
-    role        Role      @default(USER)
-    posts       Post[]
-    comments    Comment[]
-    likes       Likes[]
-    profile     Profile?
-    password    String
-    hasFriends  User[]    @relation("friends")
-    friendsWith User[]    @relation("friends")
+    id                    Int             @id @default(autoincrement())
+    email                 String          @unique
+    role                  Role            @default(USER)
+    banned                Boolean         @default(false)
+    timeBanned            DateTime?       @default(now())
+    name                  String
+    posts                 Post[]
+    comments              Comment[]
+    likes                 Likes[]
+    profile               Profile?
+    password              String
+    hasFriends            User[]          @relation("friends")
+    friendsWith           User[]          @relation("friends")
+    friendRequestSent     friendRequest[] @relation("sender")
+    friendRequestReceived friendRequest[] @relation("receiver")
+    notifications         Notification[]
+    reports               Report[]
 }
 
 model Likes {
@@ -64,4 +75,36 @@ model Likes {
 enum Role {
     USER
     ADMIN
+}
+
+model friendRequest {
+    createdAt  DateTime @default(now())
+    sender     User     @relation("sender", fields: [senderId], references: [id], onDelete: Cascade)
+    senderId   Int
+    receiver   User     @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+    receiverId Int
+
+    @@id([senderId, receiverId])
+}
+
+model Notification {
+    createdAt DateTime @default(now())
+    content   String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    Int
+    post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    Int?
+
+    @@id([userId, createdAt])
+}
+
+model Report {
+    id        Int      @id @default(autoincrement())
+    resolved  Boolean  @default(false)
+    createdAt DateTime @default(now())
+    content   String
+    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId  Int
+    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    Int
 }
