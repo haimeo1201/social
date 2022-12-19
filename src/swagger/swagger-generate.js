@@ -45,14 +45,14 @@
  *      summary: Get all post of current user
  *      responses:
  *          200:
- *              description: Get all post successfully
+ *              description: Get all post from user successfully
  * /api/user/getAllPostFromAllUser:
  *  get:
  *      tags: [Users route]
  *      summary: Get all post of all user
  *      responses:
  *          200:
- *              description: Get all post successfully
+ *              description: Get all post from all user successfully
  * /api/user/getUserFriendList:
  *  get:
  *      tags: [Users route]
@@ -66,14 +66,14 @@
  *      summary: Get all your friends' and your posts
  *      responses:
  *          200:
- *              description: Get friend list successfully
+ *              description: Get news feed successfully
  * /api/user/getFriendRequest:
  *  get:
  *     tags: [Users route]
  *     summary: Get all friend request
  *     responses:
  *      200:
- *          description: Get friend request successfully
+ *          description: Get friend requests successfully
  * /api/user/sendFriendRequest:
  *  post:
  *     tags: [Users route]
@@ -90,7 +90,7 @@
  *                              default: 2
  *     responses:
  *          200:
- *              description: Send friend request successfully
+ *              description: Friend request sent successfully
  * /api/user/acceptFriendRequest:
  *  post:
  *     tags: [Users route]
@@ -107,7 +107,7 @@
  *                              default: 2
  *     responses:
  *          200:
- *              description: Accept friend request successfully
+ *              description: Friend request accepted successfully
  * /api/user/removeFriend:
  *  post:
  *     tags: [Users route]
@@ -124,24 +124,7 @@
  *                              default: 2
  *     responses:
  *          200:
- *              description: Remove friend successfully
- * /api/post/getPostById:
- *  get:
- *      tags: [Posts route]
- *      summary: Get a post by id
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          postId:
- *                              type: integer
- *                              default: 1
- *      responses:
- *          200:
- *              description: Accept friend request successfully
+ *              description: Friend removed successfully
  * /api/post/addPost:
  *  post:
  *      tags: [Posts route]
@@ -196,26 +179,6 @@
  *      responses:
  *          200:
  *              description: Comment succesfully
- * /api/post/sharePost:
- *  post:
- *      tags: [Posts route]
- *      summary: Share a post
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          content:
- *                              type: string
- *                              default: bài post của bạn rất hay
- *                          postId:
- *                              type: integer
- *                              default: 2
- *      responses:
- *          200:
- *              description: Comment succesfully
  * /api/post/removeCommentFromPost:
  *  post:
  *      tags: [Posts route]
@@ -249,7 +212,27 @@
  *                              default: 1
  *      responses:
  *          200:
- *              description: Like post succesfully
+ *              description: Change like status succesfully
+ * /api/post/sharePost:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Share a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          content:
+ *                              type: string
+ *                              default: bài post của bạn rất hay
+ *                          postId:
+ *                              type: integer
+ *                              default: 2
+ *      responses:
+ *          200:
+ *              description: Comment succesfully
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]

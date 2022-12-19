@@ -10,7 +10,7 @@
  */
 class newError extends Error {
     constructor(errorBody) {
-        super(errorBody.message);
+        super();
 
         this.error = errorBody.error;
         this.message = errorBody.message;
