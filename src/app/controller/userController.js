@@ -344,6 +344,45 @@ class userController {
       res.json(error);
     }
   }
+  async cancelFriendRequest(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        friendId: {
+          type: "integer",
+        },
+      },
+      required: ["friendId"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10200,
+      "Invalid reject friend request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
+    }
+
+    try {
+      const result = await userQueries.cancelFriendRequest(
+        req.id,
+        req.body.friendId
+      );
+
+      res.json({
+        error: 0,
+        message: "Cancel friend request successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();

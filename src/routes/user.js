@@ -19,5 +19,10 @@ route.delete(
   isAuth,
   userController.rejectFriendRequest
 );
+route.delete(
+  "/cancelFriendRequest",
+  isAuth,
+  userController.cancelFriendRequest
+);
 route.post("/getRelationship", isAuth, userController.getRelationship);
 module.exports = route;

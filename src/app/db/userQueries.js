@@ -656,6 +656,54 @@ class userQueries {
     }
     return "None";
   }
+  async cancelFriendRequest(userId, friendId) {
+    try {
+      if (userId === friendId) {
+        throw new newError({
+          error: 10203,
+          message: "You cannot cancel friend request to yourself",
+          data: [],
+        });
+      }
+
+      const friend = await this.getUserById(friendId);
+      if (friend === null) {
+        throw new newError({
+          error: 10201,
+          message: "Friend not found",
+          data: [],
+        });
+      }
+
+      const sentFriendRequest = await this.getSentFriendRequest(userId);
+      let isSent = false;
+      sentFriendRequest.forEach((element) => {
+        if (element.receiverId === friendId) {
+          isSent = true;
+        }
+      });
+      if (!isSent) {
+        throw new newError({
+          error: 10207,
+          message: "No friend request sent to this user",
+          data: [],
+        });
+      }
+
+      await db.friendRequest.delete({
+        where: {
+          senderId_receiverId: {
+            senderId: userId,
+            receiverId: friendId,
+          },
+        },
+      });
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = new userQueries();

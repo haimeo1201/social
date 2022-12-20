@@ -162,6 +162,23 @@
  *     responses:
  *          200:
  *              description: Get user info successfully
+ * /api/user/cancelFriendRequest:
+ *  delete:
+ *     tags: [Users route]
+ *     summary: Cancel friend request
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          friendId:
+ *                              type: integer
+ *                              default: 1
+ *     responses:
+ *          200:
+ *             description: Cancel friend request successfully
  * /api/user/getUserDescriptionById:
  *  post:
  *     tags: [Users route]
