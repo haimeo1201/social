@@ -16,6 +16,6 @@ route.post(
 );
 route.post("/togglePostLike", isAuth, postController.togglePostLike);
 route.post("/sharePost", isAuth, postController.sharePost);
-route.post("/getPostById", isAuth, postController.getPostById);
+route.post("/getPostById", postController.getPostById);
 
 module.exports = route;

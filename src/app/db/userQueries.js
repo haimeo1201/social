@@ -9,6 +9,13 @@ class userQueries {
         where: {
           email: email,
         },
+        include: {
+          profile: {
+            select: {
+              avatar: true,
+            },
+          },
+        },
       });
 
       return result;

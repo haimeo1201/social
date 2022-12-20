@@ -39,13 +39,6 @@
  *         id: 1
  *         email: alice@123
  *         password: 123
- * /api/user/getAllPostFromUser:
- *  get:
- *      tags: [Users route]
- *      summary: Get all post of current user
- *      responses:
- *          200:
- *              description: Get all post successfully
  * /api/user/getAllPostFromAllUser:
  *  get:
  *      tags: [Users route]
@@ -53,13 +46,6 @@
  *      responses:
  *          200:
  *              description: Get all post successfully
- * /api/user/getUserFriendList:
- *  get:
- *      tags: [Users route]
- *      summary: Get your current friends lists
- *      responses:
- *          200:
- *              description: Get friend list successfully
  * /api/user/getNewsFeed:
  *  get:
  *      tags: [Users route]

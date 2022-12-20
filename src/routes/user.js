@@ -5,9 +5,7 @@ const userController = require("../app/controller/userController");
 
 const { isAuth, isAdmin } = require("../app/authentication/authMiddleware");
 
-route.get("/getAllPostFromUser", isAuth, userController.getAllPostFromUser);
 route.get("/getAllPostFromAllUser", userController.getAllPostFromAllUser);
-route.get("/getUserFriendList", isAuth, userController.getUserFriendList);
 route.get("/getNewsFeed", isAuth, userController.getNewsFeed);
 route.get("/getFriendRequest", isAuth, userController.getFriendRequest);
 
