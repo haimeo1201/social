@@ -100,6 +100,8 @@ class userQueries {
               bio: "nothing",
               gender: "nothing",
               age: 20,
+              avatar: "http://localhost:8080/images/profile/noAvatar.png",
+              wallpaper: "http://localhost:8080/images/profile/noCover.png",
               description: "i'm human",
             },
           },

@@ -13,6 +13,8 @@ async function main() {
           gender: "grill",
           age: 123,
           description: "ez game ez life",
+          avatar: "http://localhost:8080/images/profile/noAvatar.png",
+          wallpaper: "http://localhost:8080/images/profile/noCover.png",
         },
       },
       posts: {
@@ -33,6 +35,8 @@ async function main() {
           gender: "boy",
           age: 123,
           description: "yeu mau hong ghet su gia doi",
+          avatar: "http://localhost:8080/images/profile/noAvatar.png",
+          wallpaper: "http://localhost:8080/images/profile/noCover.png",
         },
       },
     },
