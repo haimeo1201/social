@@ -6,7 +6,7 @@ const routes = require("./routes/index");
 
 const port = process.env.PORT;
 const frontendPort = process.env.FRONTEND_URL;
-app.use("/images", express.static("./public/image"));
+app.use("/image", express.static("./public/image"));
 app.use("/video", express.static("./public/video"));
 app.use(
   cors({

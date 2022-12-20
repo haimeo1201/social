@@ -1,6 +1,7 @@
 const db = require("./database");
 const newError = require("../utils/newError");
 const path = require("path");
+const fs = require("fs");
 class postQueries {
   async getPostById(postId) {
     try {
@@ -76,7 +77,7 @@ class postQueries {
       if (attachment !== null) {
         const ext = path.extname(attachment);
         if (ext === ".jpg" || ext === ".jpeg" || ext === ".png") {
-          attachment = "/images/post/" + attachment;
+          attachment = "/image/post/" + attachment;
         } else {
           attachment = "/video/" + attachment;
         }
@@ -119,6 +120,19 @@ class postQueries {
             data: [],
           });
         } else {
+          if (post.attachments !== null) {
+            let target;
+            for (let i = post.attachments.length - 1; i >= 0; i--) {
+              if (post.attachments.slice(0, i) === "http://localhost:8080") {
+                target = post.attachments.slice(i);
+              }
+            }
+            fs.unlink("./public" + target, (err) => {
+              if (err) {
+                throw err;
+              }
+            });
+          }
           const result = await db.post.delete({
             where: {
               id: postId,
