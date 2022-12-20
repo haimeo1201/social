@@ -52,6 +52,9 @@ class userQueries {
                   },
                 },
               },
+              author: {
+                select: { name: true },
+              },
               sharedFrom: true,
             },
           },
