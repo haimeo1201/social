@@ -257,6 +257,44 @@ class postController {
       res.json(error);
     }
   }
+  /** [POST] */
+  async toggleCommentLike(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        commentId: {
+          type: "integer",
+        },
+      },
+      required: ["commentId"],
+    };
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10300,
+      "Invalid like post request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
+    }
+    try {
+      const result = await postQueries.toggleCommentLike(
+        req.id,
+        req.body.commentId
+      );
+
+      res.json({
+        error: 0,
+        message: "Like status changed successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
   async sharePost(req, res) {
     const bodySchema = {
       type: "object",

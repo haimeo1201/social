@@ -20,18 +20,31 @@ class postQueries {
             orderBy: {
               updatedAt: "desc",
             },
+            include: {
+              likes: {
+                select: {
+                  author: {
+                    select: {
+                      id: true,
+                    },
+                  },
+                },
+              },
+            },
           },
           likes: {
             select: {
               author: {
                 select: {
-                  name: true,
+                  id: true,
                 },
               },
             },
           },
           author: {
-            select: { name: true },
+            select: {
+              id: true,
+            },
           },
           sharedFrom: true,
         },
@@ -117,6 +130,31 @@ class postQueries {
       throw error;
     }
   }
+  async toggleCommentLike(authorId, commentId) {
+    try {
+      const existedLike = await db.likes.findFirst({
+        where: {
+          commentId: commentId,
+          authorId: authorId,
+        },
+      });
+      const result = existedLike
+        ? await db.likes.delete({
+            where: {
+              id: existedLike.id,
+            },
+          })
+        : await db.likes.create({
+            data: {
+              commentId: commentId,
+              authorId: authorId,
+            },
+          });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async togglePostLike(authorId, postId) {
     try {
@@ -157,46 +195,6 @@ class postQueries {
       return newPost;
     } catch (e) {
       throw e;
-    }
-  }
-  async getPostById(postId) {
-    try {
-      const result = await db.post.findUnique({
-        where: {
-          id: postId,
-        },
-        include: {
-          _count: {
-            select: {
-              likes: true,
-              comments: true,
-              listShare: true,
-            },
-          },
-          comments: {
-            orderBy: {
-              updatedAt: "desc",
-            },
-          },
-          likes: {
-            select: {
-              author: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-          author: {
-            select: { name: true },
-          },
-          sharedFrom: true,
-        },
-      });
-
-      return result;
-    } catch (error) {
-      throw error;
     }
   }
 }

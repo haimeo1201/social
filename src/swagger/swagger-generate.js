@@ -94,8 +94,25 @@
  *     responses:
  *          200:
  *              description: Accept friend request successfully
+ * /api/user/rejectFriendRequest:
+ *  delete:
+ *     tags: [Users route]
+ *     summary: Reject a friend request
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          friendId:
+ *                              type: integer
+ *                              default: 2
+ *     responses:
+ *          200:
+ *              description: Reject friend request successfully
  * /api/user/removeFriend:
- *  post:
+ *  delete:
  *     tags: [Users route]
  *     summary: Remove a friend
  *     requestBody:
@@ -115,6 +132,23 @@
  *  post:
  *     tags: [Users route]
  *     summary: Get general information of a user
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          userId:
+ *                              type: integer
+ *                              default: 1
+ *     responses:
+ *          200:
+ *              description: Get user info successfully
+ * /api/user/getRelationship:
+ *  post:
+ *     tags: [Users route]
+ *     summary: Get relationship with a user
  *     requestBody:
  *          required: true
  *          content:
@@ -186,7 +220,7 @@
  *          200:
  *             description: Post successfully
  * /api/post/removePost:
- *  post:
+ *  delete:
  *      tags: [Posts route]
  *      summary: Remove a post
  *      requestBody:
@@ -276,6 +310,23 @@
  *      responses:
  *          200:
  *              description: Like post succesfully
+ * /api/post/toggleCommentLike:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Toggle like on a comment
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          commentId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Like post succesfully
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]
@@ -293,6 +344,15 @@
  *                          password:
  *                              type: string
  *                              default: 123
+ *                          name:
+ *                              type: string
+ *                              default: alice
+ *                          age:
+ *                              type: integer
+ *                              default: 20
+ *                          gender:
+ *                              type: string
+ *                              default: Female
  *      responses:
  *          201:
  *              description: Create user succesfully

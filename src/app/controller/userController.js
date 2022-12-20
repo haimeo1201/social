@@ -261,6 +261,89 @@ class userController {
       res.json(error);
     }
   }
+  async rejectFriendRequest(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        friendId: {
+          type: "integer",
+        },
+      },
+      required: ["friendId"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10200,
+      "Invalid reject friend request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
+    }
+
+    try {
+      const result = await userQueries.rejectFriendRequest(
+        req.body.friendId,
+        req.id
+      );
+
+      res.json({
+        error: 0,
+        message: "Reject friend request successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
+  async getRelationship(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        userId: {
+          type: "integer",
+        },
+      },
+      required: ["userId"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10200,
+      "Invalid reject friend request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
+    }
+
+    try {
+      if (req.id === req.body.userId) {
+        res.json({
+          error: 0,
+          message: "Get relationship successfully",
+          data: "Yourself",
+        });
+        return;
+      }
+      const result = await userQueries.getRelationship(req.id, req.body.userId);
+
+      res.json({
+        error: 0,
+        message: "Get relationship successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();

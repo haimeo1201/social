@@ -49,18 +49,31 @@ class userQueries {
                 orderBy: {
                   updatedAt: "desc",
                 },
+                include: {
+                  likes: {
+                    select: {
+                      author: {
+                        select: {
+                          id: true,
+                        },
+                      },
+                    },
+                  },
+                },
               },
               likes: {
                 select: {
                   author: {
                     select: {
-                      name: true,
+                      id: true,
                     },
                   },
                 },
               },
               author: {
-                select: { name: true },
+                select: {
+                  id: true,
+                },
               },
               sharedFrom: true,
             },
@@ -88,18 +101,61 @@ class userQueries {
     }
   }
 
-  async createNewUser(email, password) {
+  async rejectFriendRequest(friendId, userId) {
+    try {
+      if (userId === friendId) {
+        throw new newError({
+          error: 10203,
+          message: "You cannot reject yourself",
+          data: [],
+        });
+      }
+
+      const friend = await this.getUserById(friendId);
+      if (friend === null) {
+        throw new newError({
+          error: 10201,
+          message: "Friend not found",
+          data: [],
+        });
+      }
+
+      const friendList = await this.getUserFriendList(userId);
+      friendList.forEach((element) => {
+        if (element.id === friendId) {
+          throw new newError({
+            error: 10202,
+            message: "Already in friends list",
+            data: [],
+          });
+        }
+      });
+      const result = await db.friendRequest.delete({
+        where: {
+          senderId_receiverId: {
+            senderId: friendId,
+            receiverId: userId,
+          },
+        },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createNewUser(email, password, name, age, gender) {
     try {
       const result = await db.user.create({
         data: {
           email: email,
           password: password,
-          name: email,
+          name: name,
           profile: {
             create: {
               bio: "nothing",
-              gender: "nothing",
-              age: 20,
+              gender: gender,
+              age: age,
               avatar: "http://localhost:8080/images/profile/noAvatar.png",
               wallpaper: "http://localhost:8080/images/profile/noCover.png",
               description: "i'm human",
@@ -135,18 +191,31 @@ class userQueries {
             orderBy: {
               updatedAt: "desc",
             },
+            include: {
+              likes: {
+                select: {
+                  author: {
+                    select: {
+                      id: true,
+                    },
+                  },
+                },
+              },
+            },
           },
           likes: {
             select: {
               author: {
                 select: {
-                  name: true,
+                  id: true,
                 },
               },
             },
           },
           author: {
-            select: { name: true },
+            select: {
+              id: true,
+            },
           },
           sharedFrom: true,
         },
@@ -176,6 +245,13 @@ class userQueries {
             orderBy: {
               updatedAt: "desc",
             },
+            include: {
+              likes: {
+                select: {
+                  authorId: true,
+                },
+              },
+            },
           },
           likes: {
             select: {
@@ -186,9 +262,7 @@ class userQueries {
               },
             },
           },
-          author: {
-            select: { name: true },
-          },
+          authorId: true,
           sharedFrom: true,
         },
       });
@@ -250,18 +324,31 @@ class userQueries {
             orderBy: {
               updatedAt: "desc",
             },
+            include: {
+              likes: {
+                select: {
+                  author: {
+                    select: {
+                      id: true,
+                    },
+                  },
+                },
+              },
+            },
           },
           likes: {
             select: {
               author: {
                 select: {
-                  name: true,
+                  id: true,
                 },
               },
             },
           },
           author: {
-            select: { name: true },
+            select: {
+              id: true,
+            },
           },
           sharedFrom: true,
         },
@@ -527,6 +614,39 @@ class userQueries {
       },
     });
     return user;
+  }
+  async getRelationship(userId, friendId) {
+    const friendList = await this.getUserFriendList(userId);
+    let isFriend = false;
+    friendList.forEach((element) => {
+      if (element.id === friendId) {
+        isFriend = true;
+      }
+    });
+    if (isFriend) {
+      return "Friends";
+    }
+    const sentFriendRequest = await this.getSentFriendRequest(userId);
+    let isSent = false;
+    sentFriendRequest.forEach((element) => {
+      if (element.receiverId === friendId) {
+        isSent = true;
+      }
+    });
+    if (isSent) {
+      return "Sent";
+    }
+    const receivedFriendRequest = await this.getFriendRequest(userId);
+    let isReceived = false;
+    receivedFriendRequest.forEach((element) => {
+      if (element.senderId === friendId) {
+        isReceived = true;
+      }
+    });
+    if (isReceived) {
+      return "Received";
+    }
+    return "None";
   }
 }
 

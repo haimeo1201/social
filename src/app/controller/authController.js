@@ -116,8 +116,20 @@ class authController {
           type: "string",
           nullable: false,
         },
+        name: {
+          type: "string",
+          nullable: false,
+        },
+        age: {
+          type: "integer",
+          nullable: false,
+        },
+        gender: {
+          type: "string",
+          nullable: false,
+        },
       },
-      required: ["password", "email"],
+      required: ["password", "email", "name", "age", "gender"],
     };
 
     const invalid = validateBodySchema(
@@ -149,7 +161,13 @@ class authController {
         return;
       }
 
-      const newUser = await userQueries.createNewUser(email, password);
+      const newUser = await userQueries.createNewUser(
+        email,
+        password,
+        req.body.name,
+        req.body.age,
+        req.body.gender
+      );
 
       res.json({
         error: 0,

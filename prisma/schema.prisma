@@ -34,6 +34,7 @@ model Comment {
     authorId  Int
     post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
     postId    Int
+    likes     Likes[]
 }
 
 model Profile {
@@ -68,12 +69,14 @@ model User {
 }
 
 model Likes {
-    id       Int      @id @default(autoincrement())
-    created  DateTime @default(now())
-    author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    authorId Int
-    post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-    postId   Int
+    id        Int      @id @default(autoincrement())
+    created   DateTime @default(now())
+    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId  Int
+    post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId    Int?
+    comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+    commentId Int?
 }
 
 enum Role {

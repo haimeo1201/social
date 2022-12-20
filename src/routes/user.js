@@ -11,8 +11,13 @@ route.get("/getFriendRequest", isAuth, userController.getFriendRequest);
 
 route.post("/sendFriendRequest", isAuth, userController.sendFriendRequest);
 route.post("/acceptFriendRequest", isAuth, userController.acceptFriendRequest);
-route.post("/removeFriend", isAuth, userController.removeFriend);
+route.delete("/removeFriend", isAuth, userController.removeFriend);
 route.post("/getUserById", userController.getUserById);
 route.post("/getUserDescriptionById", userController.getDescription);
-
+route.delete(
+  "/rejectFriendRequest",
+  isAuth,
+  userController.rejectFriendRequest
+);
+route.post("/getRelationship", isAuth, userController.getRelationship);
 module.exports = route;
