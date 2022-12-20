@@ -248,7 +248,11 @@ class userQueries {
             include: {
               likes: {
                 select: {
-                  authorId: true,
+                  author: {
+                    select: {
+                      id: true,
+                    },
+                  },
                 },
               },
             },
@@ -257,12 +261,16 @@ class userQueries {
             select: {
               author: {
                 select: {
-                  name: true,
+                  id: true,
                 },
               },
             },
           },
-          authorId: true,
+          author: {
+            select: {
+              id: true,
+            },
+          },
           sharedFrom: true,
         },
       });
