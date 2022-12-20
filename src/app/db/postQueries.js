@@ -1,6 +1,6 @@
 const db = require("./database");
 const newError = require("../utils/newError");
-
+const path = require("path");
 class postQueries {
   async getPostById(postId) {
     try {
@@ -73,11 +73,19 @@ class postQueries {
 
   async addPost(authorId, content, attachment = null) {
     try {
+      if (attachment !== null) {
+        const ext = path.extname(attachment);
+        if (ext === ".jpg" || ext === ".jpeg" || ext === ".png") {
+          attachment = "/images/post/" + attachment;
+        } else {
+          attachment = "/video/" + attachment;
+        }
+      }
       const result = await db.post.create({
         data: {
           content: content,
           authorId: authorId,
-          attachments: attachment,
+          attachments: "http://localhost:8080" + attachment,
         },
       });
 
