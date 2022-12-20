@@ -227,6 +227,40 @@ class userController {
       res.json(e);
     }
   }
+  async getDescription(req, res) {
+    try {
+      const bodySchema = {
+        type: "object",
+        properties: {
+          userId: {
+            type: "integer",
+          },
+        },
+        required: ["userId"],
+      };
+
+      const invalid = validateBodySchema(
+        bodySchema,
+        req.body,
+        10200,
+        "Invalid request body"
+      );
+
+      if (invalid !== false) {
+        res.json(invalid);
+
+        return;
+      }
+      const result = await userQueries.getDescription(req.body.userId);
+      res.json({
+        error: 0,
+        message: "Get descriptions successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();

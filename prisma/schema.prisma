@@ -37,13 +37,14 @@ model Comment {
 }
 
 model Profile {
-    bio       String?
-    user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId    Int     @unique
-    gender    String
-    age       Int
-    avatar    String
-    wallpaper String
+    bio         String?
+    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      Int     @unique
+    gender      String
+    age         Int
+    avatar      String
+    wallpaper   String
+    description String
 }
 
 model User {

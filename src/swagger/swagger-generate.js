@@ -141,7 +141,24 @@
  *                              default: 1
  *     responses:
  *          200:
- *              description: Remove friend successfully
+ *              description: Get user info successfully
+ * /api/user/getUserDescriptionById:
+ *  post:
+ *     tags: [Users route]
+ *     summary: Get description of a user
+ *     requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          userId:
+ *                              type: integer
+ *                              default: 1
+ *     responses:
+ *          200:
+ *              description: Get user info successfully
  * /api/post/getPostById:
  *  post:
  *      tags: [Posts route]

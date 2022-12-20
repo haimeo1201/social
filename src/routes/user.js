@@ -15,5 +15,6 @@ route.post("/sendFriendRequest", isAuth, userController.sendFriendRequest);
 route.post("/acceptFriendRequest", isAuth, userController.acceptFriendRequest);
 route.post("/removeFriend", isAuth, userController.removeFriend);
 route.post("/getUserById", userController.getUserById);
+route.post("/getUserDescriptionById", userController.getDescription);
 
 module.exports = route;

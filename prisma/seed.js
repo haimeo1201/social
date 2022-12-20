@@ -14,6 +14,7 @@ async function main() {
           age: 123,
           avatar: "https://picsum.photos/200",
           wallpaper: "https://picsum.photos/200",
+          description: "ez game ez life",
         },
       },
       posts: {
@@ -35,6 +36,7 @@ async function main() {
           age: 123,
           avatar: "https://picsum.photos/200",
           wallpaper: "https://picsum.photos/200",
+          description: "yeu mau hong ghet su gia doi",
         },
       },
     },

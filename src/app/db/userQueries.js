@@ -95,6 +95,7 @@ class userQueries {
               age: 20,
               avatar: "https://picsum.photos/200",
               wallpaper: "https://picsum.photos/200",
+              description: "i'm human",
             },
           },
         },
@@ -501,6 +502,24 @@ class userQueries {
     } catch (error) {
       throw error;
     }
+  }
+  async getDescription(userId) {
+    const user = await db.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        email: true,
+        name: true,
+        profile: {
+          select: {
+            description: true,
+            avatar: true,
+          },
+        },
+      },
+    });
+    return user;
   }
 }
 
