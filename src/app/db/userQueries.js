@@ -100,8 +100,6 @@ class userQueries {
               bio: "nothing",
               gender: "nothing",
               age: 20,
-              avatar: "https://picsum.photos/200",
-              wallpaper: "https://picsum.photos/200",
               description: "i'm human",
             },
           },

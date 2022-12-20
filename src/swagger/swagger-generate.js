@@ -163,22 +163,28 @@
  *          200:
  *              description: Accept friend request successfully
  * /api/post/addPost:
- *  post:
+ *   post:
  *      tags: [Posts route]
  *      summary: Post something
  *      requestBody:
  *          required: true
  *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          content:
- *                              type: string
- *                              default: anh yeu em nhieu lam
+ *             multipart/form-data:
+ *               schema:
+ *                   type: object
+ *                   properties:
+ *                       content:
+ *                         type: string
+ *                       type:
+ *                         type: string
+ *                         default: post
+ *                       file:
+ *                         type: string
+ *                         format: binary
+ *
  *      responses:
  *          200:
- *              description: Create post succesfully
+ *             description: Post successfully
  * /api/post/removePost:
  *  post:
  *      tags: [Posts route]

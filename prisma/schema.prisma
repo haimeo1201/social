@@ -42,8 +42,8 @@ model Profile {
     userId      Int     @unique
     gender      String
     age         Int
-    avatar      String
-    wallpaper   String
+    avatar      String  @default("noAvatar.png")
+    wallpaper   String  @default("noCover.png")
     description String
 }
 
