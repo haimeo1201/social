@@ -8,7 +8,6 @@ const port = process.env.PORT;
 const frontendPort = process.env.FRONTEND_URL;
 app.use("/images", express.static("./public/image"));
 app.use("/video", express.static("./public/video"));
-
 app.use(
   cors({
     origin: [frontendPort],
@@ -16,7 +15,7 @@ app.use(
   })
 );
 
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 routes(app);
 

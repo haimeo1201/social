@@ -273,7 +273,7 @@
  *          200:
  *              description: Comment succesfully
  * /api/post/removeCommentFromPost:
- *  post:
+ *  delete:
  *      tags: [Posts route]
  *      summary: Remove a comment from a post
  *      requestBody:

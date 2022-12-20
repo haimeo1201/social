@@ -10,10 +10,10 @@ route.post("/getPostById", postController.getPostById);
 route.post("/addPost", isAuth, upload.single("file"), postController.addPost);
 route.delete("/removePost", isAuth, postController.removePost);
 route.post("/addCommentToPost", isAuth, postController.addCommentToPost);
-route.post(
-    "/removeCommentFromPost",
-    isAuth,
-    postController.removeCommentFromPost
+route.delete(
+  "/removeCommentFromPost",
+  isAuth,
+  postController.removeCommentFromPost
 );
 route.post("/togglePostLike", isAuth, postController.togglePostLike);
 route.post("/toggleCommentLike", isAuth, postController.toggleCommentLike);
