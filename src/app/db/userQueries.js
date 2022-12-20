@@ -25,9 +25,34 @@ class userQueries {
         },
         include: {
           profile: true,
-          _count: {
-            select: {
-              hasFriends: true,
+          hasFriends: true,
+          posts: {
+            orderBy: {
+              updatedAt: "desc",
+            },
+            include: {
+              _count: {
+                select: {
+                  likes: true,
+                  comments: true,
+                  listShare: true,
+                },
+              },
+              comments: {
+                orderBy: {
+                  updatedAt: "desc",
+                },
+              },
+              likes: {
+                select: {
+                  author: {
+                    select: {
+                      name: true,
+                    },
+                  },
+                },
+              },
+              sharedFrom: true,
             },
           },
         },
