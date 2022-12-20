@@ -8,6 +8,33 @@ class postQueries {
         where: {
           id: postId,
         },
+        include: {
+          _count: {
+            select: {
+              likes: true,
+              comments: true,
+              listShare: true,
+            },
+          },
+          comments: {
+            orderBy: {
+              updatedAt: "desc",
+            },
+          },
+          likes: {
+            select: {
+              author: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          author: {
+            select: { name: true },
+          },
+          sharedFrom: true,
+        },
       });
 
       return result;

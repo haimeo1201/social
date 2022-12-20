@@ -39,21 +39,55 @@ async function main() {
       },
     },
   });
-  const post = await prisma.post.createMany({
-    data: [
-      {
-        content: "bla bla bla ",
-        authorId: bob.id,
+  const post = await prisma.post.create({
+    data: {
+      content: "nho ban xinh xinh vl",
+      authorId: alice.id,
+      comments: {
+        create: {
+          content: "nho ban xinh xinh vl",
+          authorId: bob.id,
+        },
       },
-      {
-        content: " dit me alice",
-        authorId: bob.id,
+    },
+  });
+  const post2 = await prisma.post.create({
+    data: {
+      content: "dit me may",
+      authorId: alice.id,
+      comments: {
+        create: {
+          content: "nho ban xinh xinh vl",
+          authorId: bob.id,
+        },
       },
-      {
-        content: " cai deo gi",
-        authorId: alice.id,
-      },
-    ],
+    },
+  });
+  const comment2 = await prisma.comment.create({
+    data: {
+      content: "nho ban xinh xinh vl",
+      authorId: bob.id,
+      postId: post2.id,
+    },
+  });
+  const comment = await prisma.comment.create({
+    data: {
+      content: "nho ban xinh xinh vl",
+      authorId: bob.id,
+      postId: post.id,
+    },
+  });
+  const like = await prisma.likes.create({
+    data: {
+      authorId: bob.id,
+      postId: post.id,
+    },
+  });
+  const like2 = await prisma.likes.create({
+    data: {
+      authorId: bob.id,
+      postId: post2.id,
+    },
   });
 }
 main()

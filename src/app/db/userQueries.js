@@ -100,6 +100,15 @@ class userQueries {
               updatedAt: "desc",
             },
           },
+          likes: {
+            select: {
+              author: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
           author: {
             select: { name: true },
           },
@@ -130,6 +139,15 @@ class userQueries {
           comments: {
             orderBy: {
               updatedAt: "desc",
+            },
+          },
+          likes: {
+            select: {
+              author: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
           author: {
@@ -195,6 +213,15 @@ class userQueries {
           comments: {
             orderBy: {
               updatedAt: "desc",
+            },
+          },
+          likes: {
+            select: {
+              author: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
           author: {
