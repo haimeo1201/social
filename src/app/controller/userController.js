@@ -2,10 +2,51 @@ const userQueries = require("../db/userQueries");
 const validateBodySchema = require("../utils/validateBodySchema");
 
 class userController {
+  async getTrendingPost(req, res) {
+    const bodySchema = {
+      type: "object",
+      properties: {
+        first: {
+          type: "integer",
+        },
+        last: {
+          type: "integer",
+        },
+      },
+      required: ["first", "last"],
+    };
+
+    const invalid = validateBodySchema(
+      bodySchema,
+      req.body,
+      10300,
+      "Invalid get post by id request body"
+    );
+
+    if (invalid !== false) {
+      res.json(invalid);
+
+      return;
+    }
+    try {
+      const result = await userQueries.getTrendingPost(
+        req.body.first,
+        req.body.last
+      );
+      res.json({
+        error: 0,
+        message: "Get all post from user successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
   /** [GET] */
   async getAllPostFromUser(req, res) {
     try {
       const result = await userQueries.getAllPostFromUser(req.id);
+      console.log(result);
       res.json({
         error: 0,
         message: "Get all post from user successfully",

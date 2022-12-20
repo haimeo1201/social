@@ -25,4 +25,5 @@ route.delete(
   userController.cancelFriendRequest
 );
 route.post("/getRelationship", isAuth, userController.getRelationship);
+route.post("/getTrendingPost", userController.getTrendingPost);
 module.exports = route;

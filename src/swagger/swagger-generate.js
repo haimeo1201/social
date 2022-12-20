@@ -162,6 +162,26 @@
  *     responses:
  *          200:
  *              description: Get user info successfully
+ * /api/user/getTrendingPost:
+ *  post:
+ *      tags: [Users route]
+ *      summary: Get all post of all user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          first:
+ *                              type: integer
+ *                              default: 0
+ *                          last:
+ *                              type: integer
+ *                              default: 3
+ *      responses:
+ *           200:
+ *               description: Send friend request successfully
  * /api/user/cancelFriendRequest:
  *  delete:
  *     tags: [Users route]

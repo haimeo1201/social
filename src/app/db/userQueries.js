@@ -3,6 +3,26 @@ const newError = require("../utils/newError");
 const { friendRequest } = require("./database");
 
 class userQueries {
+  async getTrendingPost(first, last) {
+    try {
+      const array = await this.getAllPostFromAllUser();
+      let result = array.sort((a, b) => {
+        return (
+          b._count.likes +
+          b._count.comments -
+          (a._count.likes + a._count.comments)
+        );
+      });
+      let trendingPost = [];
+      for (let i = first; i < result.length; i++) {
+        trendingPost.push(result[i]);
+        if (i === last) break;
+      }
+      return trendingPost;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getUserByEmail(email) {
     try {
       const result = await db.user.findUnique({
