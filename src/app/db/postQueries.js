@@ -189,27 +189,36 @@ class postQueries {
 
     async togglePostLike(authorId, postId) {
         try {
-            const existedLike = await db.likes.findFirst({
-                where: {
-                    postId: postId,
-                    authorId: authorId,
-                },
-            });
+            const post = await this.getPostById(postId);
+            if (post === null) {
+                throw new newError({
+                    error: 10303,
+                    message: "Post not found",
+                    data: [],
+                });
+            } else {
+                const existedLike = await db.likes.findFirst({
+                    where: {
+                        postId: postId,
+                        authorId: authorId,
+                    },
+                });
 
-            const result = existedLike
-                ? await db.likes.delete({
-                      where: {
-                          id: existedLike.id,
-                      },
-                  })
-                : await db.likes.create({
-                      data: {
-                          postId: postId,
-                          authorId: authorId,
-                      },
-                  });
+                const result = existedLike
+                    ? await db.likes.delete({
+                          where: {
+                              id: existedLike.id,
+                          },
+                      })
+                    : await db.likes.create({
+                          data: {
+                              postId: postId,
+                              authorId: authorId,
+                          },
+                      });
 
-            return result;
+                return result;
+            }
         } catch (error) {
             throw error;
         }
@@ -217,25 +226,82 @@ class postQueries {
 
     async toggleCommentLike(authorId, commentId) {
         try {
-            const existedLike = await db.likes.findFirst({
-                where: {
-                    commentId: commentId,
-                    authorId: authorId,
-                },
-            });
-            const result = existedLike
-                ? await db.likes.delete({
-                      where: {
-                          id: existedLike.id,
-                      },
-                  })
-                : await db.likes.create({
-                      data: {
-                          commentId: commentId,
-                          authorId: authorId,
-                      },
-                  });
-            return result;
+            const comment = await this.getCommentById(commentId);
+            if (comment === null) {
+                throw new newError({
+                    error: 10303,
+                    message: "Comment not found",
+                    data: [],
+                });
+            } else {
+                const existedLike = await db.likes.findFirst({
+                    where: {
+                        commentId: commentId,
+                        authorId: authorId,
+                    },
+                });
+                const result = existedLike
+                    ? await db.likes.delete({
+                          where: {
+                              id: existedLike.id,
+                          },
+                      })
+                    : await db.likes.create({
+                          data: {
+                              commentId: commentId,
+                              authorId: authorId,
+                          },
+                      });
+                return result;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async checkPostLike(reqId, postId) {
+        try {
+            const post = await this.getPostById(postId);
+            if (post === null) {
+                throw new newError({
+                    error: 10303,
+                    message: "Post not found",
+                    data: [],
+                });
+            } else {
+                const result = await db.likes.findFirst({
+                    where: {
+                        postId: postId,
+                        authorId: reqId,
+                    },
+                });
+
+                return result ? false : true;
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async checkCommentLike(reqId, commentId) {
+        try {
+            const comment = await this.getCommentById(commentId);
+            if (comment === null) {
+                throw new newError({
+                    error: 10303,
+                    message: "Comment not found",
+                    data: [],
+                });
+            } else {
+                const result = await db.likes.findFirst({
+                    where: {
+                        commentId: commentId,
+                        authorId: reqId,
+                    },
+                });
+
+                return result ? false : true;
+            }
         } catch (error) {
             throw error;
         }

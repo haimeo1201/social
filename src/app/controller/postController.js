@@ -296,6 +296,86 @@ class postController {
     }
 
     /** [POST] */
+    async checkPostLike(req, res) {
+        const bodySchema = {
+            type: "object",
+            properties: {
+                postId: {
+                    type: "integer",
+                },
+            },
+            required: ["postId"],
+        };
+
+        const invalid = validateBodySchema(
+            bodySchema,
+            req.body,
+            10300,
+            "Invalid check post like status request body"
+        );
+
+        if (invalid !== false) {
+            res.json(invalid);
+
+            return;
+        }
+
+        try {
+            const result = await postQueries.checkPostLike(
+                req.id,
+                req.body.postId
+            );
+
+            res.json({
+                error: 0,
+                data: result,
+            });
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
+    /** [POST] */
+    async checkCommentLike(req, res) {
+        const bodySchema = {
+            type: "object",
+            properties: {
+                commentId: {
+                    type: "integer",
+                },
+            },
+            required: ["commentId"],
+        };
+
+        const invalid = validateBodySchema(
+            bodySchema,
+            req.body,
+            10300,
+            "Invalid check comment like status request body"
+        );
+
+        if (invalid !== false) {
+            res.json(invalid);
+
+            return;
+        }
+
+        try {
+            const result = await postQueries.checkCommentLike(
+                req.id,
+                req.body.commentId
+            );
+
+            res.json({
+                error: 0,
+                data: result,
+            });
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
+    /** [POST] */
     async sharePost(req, res) {
         const bodySchema = {
             type: "object",

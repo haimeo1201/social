@@ -232,7 +232,6 @@
  *                       file:
  *                         type: string
  *                         format: binary
- *
  *      responses:
  *          200:
  *             description: Post successfully
@@ -270,26 +269,6 @@
  *                          postId:
  *                              type: integer
  *                              default: 1
- *      responses:
- *          200:
- *              description: Comment succesfully
- * /api/post/sharePost:
- *  post:
- *      tags: [Posts route]
- *      summary: Share a post
- *      requestBody:
- *          required: true
- *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          content:
- *                              type: string
- *                              default: bài post của bạn rất hay
- *                          postId:
- *                              type: integer
- *                              default: 2
  *      responses:
  *          200:
  *              description: Comment succesfully
@@ -344,6 +323,60 @@
  *      responses:
  *          200:
  *              description: Like post succesfully
+ * /api/post/checkPostLike:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Check like status on a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          postId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Like post succesfully
+ * /api/post/checkCommentLike:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Check like status on a comment
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          commentId:
+ *                              type: integer
+ *                              default: 1
+ *      responses:
+ *          200:
+ *              description: Like post succesfully
+ * /api/post/sharePost:
+ *  post:
+ *      tags: [Posts route]
+ *      summary: Share a post
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          content:
+ *                              type: string
+ *                              default: bài post của bạn rất hay
+ *                          postId:
+ *                              type: integer
+ *                              default: 2
+ *      responses:
+ *          200:
+ *              description: Comment succesfully
  * /api/auth/register:
  *  post:
  *      tags: [Auth route]
