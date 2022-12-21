@@ -9,7 +9,12 @@ const upload = require("../app/media/upload");
 route.post("/getPostById", postController.getPostById);
 route.post("/addPost", isAuth, upload.single("file"), postController.addPost);
 route.delete("/removePost", isAuth, postController.removePost);
-route.post("/addCommentToPost", isAuth, postController.addCommentToPost);
+route.post(
+  "/addCommentToPost",
+  isAuth,
+  upload.single("file"),
+  postController.addCommentToPost
+);
 route.delete(
   "/removeCommentFromPost",
   isAuth,

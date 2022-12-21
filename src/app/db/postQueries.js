@@ -86,7 +86,7 @@ class postQueries {
         data: {
           content: content,
           authorId: authorId,
-          attachments: "http://localhost:8080" + attachment,
+          attachments: attachment ? "http://localhost:8080" + attachment : null,
         },
       });
 
@@ -147,13 +147,22 @@ class postQueries {
     }
   }
 
-  async addCommentToPost(authorId, postId, content) {
+  async addCommentToPost(authorId, postId, content, attachment = null) {
     try {
+      if (attachment !== null) {
+        const ext = path.extname(attachment);
+        if (ext === ".jpg" || ext === ".jpeg" || ext === ".png") {
+          attachment = "/image/post/" + attachment;
+        } else {
+          attachment = "/video/" + attachment;
+        }
+      }
       const result = await db.comment.create({
         data: {
           authorId: authorId,
           content: content,
           postId: postId,
+          attachments: attachment ? "http://localhost:8080" + attachment : null,
         },
       });
 

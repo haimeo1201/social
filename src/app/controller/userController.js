@@ -424,14 +424,30 @@ class userController {
       res.json(error);
     }
   }
+  async getFriendRequestSent(req, res) {
+    try {
+      const result = await userQueries.getSentFriendRequest(req.id);
+      res.json({
+        error: 0,
+        message: "Get friend request sent",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
   async editProfile(req, res) {
     try {
-      const avatar = req.files.avatar[0].filename
-        ? req.files.avatar[0].filename
-        : null;
-      const wallpaper = req.files.wallpaper[0].filename
-        ? req.files.wallpaper[0].filename
-        : null;
+      let avatar, wallpaper;
+      if (req.files === null) {
+        avatar = null;
+        wallpaper = null;
+      } else {
+        avatar = req.files.avatar ? req.files.avatar[0].filename : null;
+        wallpaper = req.files.wallpaper
+          ? req.files.wallpaper[0].filename
+          : null;
+      }
       const result = await userQueries.editProfile(
         req.body.name,
         req.body.description,

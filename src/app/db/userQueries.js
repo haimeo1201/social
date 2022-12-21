@@ -18,16 +18,16 @@ class userQueries {
           id: id,
         },
         data: {
-          name: name || user.name,
+          name: name ? user.name : name,
           profile: {
             update: {
-              description: description || user.profile.description,
-              avatar:
-                "http://localhost:8080/image/profile/" + avatar ||
-                user.profile.avatar,
-              wallpaper:
-                "http://localhost:8080/image/profile/" + wallpaper ||
-                user.profile.wallpaper,
+              description: description ? user.profile.description : description,
+              avatar: avatar
+                ? user.profile.avatar
+                : "http://localhost:8080/image/profile/" + avatar,
+              wallpaper: wallpaper
+                ? user.profile.wallpaper
+                : "http://localhost:8080/image/profile/" + wallpaper,
             },
           },
         },
@@ -150,7 +150,7 @@ class userQueries {
           senderId: id,
         },
       });
-
+      console.log(result);
       return result;
     } catch (error) {
       throw error;

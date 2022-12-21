@@ -122,6 +122,7 @@ class postController {
 
   /** [POST] */
   async addCommentToPost(req, res) {
+    req.body.postId = parseInt(req.body.postId);
     const bodySchema = {
       type: "object",
       properties: {
@@ -130,6 +131,9 @@ class postController {
         },
         postId: {
           type: "integer",
+        },
+        type: {
+          type: "string",
         },
       },
       required: ["content", "postId"],
@@ -152,7 +156,8 @@ class postController {
       const result = await postQueries.addCommentToPost(
         req.id,
         req.body.postId,
-        req.body.content
+        req.body.content,
+        req.file ? req.file.filename : null
       );
 
       res.json({

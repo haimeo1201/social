@@ -24,6 +24,7 @@ route.delete(
   isAuth,
   userController.cancelFriendRequest
 );
+route.get("/getFriendRequestSent", isAuth, userController.getFriendRequestSent);
 route.post("/getRelationship", isAuth, userController.getRelationship);
 route.post("/getTrendingPost", userController.getTrendingPost);
 route.post(

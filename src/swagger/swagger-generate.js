@@ -60,6 +60,13 @@
  *     responses:
  *      200:
  *          description: Get friend request successfully
+ * /api/user/getFriendRequestSent:
+ *  get:
+ *     tags: [Users route]
+ *     summary: Get all friend request sent
+ *     responses:
+ *      200:
+ *          description: Get friend request sent successfully
  * /api/user/sendFriendRequest:
  *  post:
  *     tags: [Users route]
@@ -304,23 +311,28 @@
  * /api/post/addCommentToPost:
  *  post:
  *      tags: [Posts route]
- *      summary: Comment on a post
+ *      summary: Comment something
  *      requestBody:
  *          required: true
  *          content:
- *              application/json:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          content:
- *                              type: string
- *                              default: bài post của bạn rất hay
- *                          postId:
- *                              type: integer
- *                              default: 1
+ *             multipart/form-data:
+ *               schema:
+ *                   type: object
+ *                   properties:
+ *                       content:
+ *                         type: string
+ *                       postId:
+ *                         type: integer
+ *                         default: 1
+ *                       type:
+ *                         type: string
+ *                         default: post
+ *                       file:
+ *                         type: string
+ *                         format: binary
  *      responses:
  *          200:
- *              description: Comment succesfully
+ *             description: Post successfully
  * /api/post/removeCommentFromPost:
  *  delete:
  *      tags: [Posts route]

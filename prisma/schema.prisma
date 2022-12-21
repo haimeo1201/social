@@ -27,14 +27,15 @@ model Post {
 }
 
 model Comment {
-    id        Int      @id @default(autoincrement())
-    updatedAt DateTime @default(now()) @updatedAt
-    content   String   @db.Text
-    author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    authorId  Int
-    post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-    postId    Int
-    likes     Likes[]
+    id          Int      @id @default(autoincrement())
+    updatedAt   DateTime @default(now()) @updatedAt
+    content     String   @db.Text
+    author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId    Int
+    post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId      Int
+    likes       Likes[]
+    attachments String?
 }
 
 model Profile {
