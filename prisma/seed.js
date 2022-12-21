@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+require("dotenv").config();
 async function main() {
   const alice = await prisma.user.create({
     data: {
@@ -13,8 +14,8 @@ async function main() {
           gender: "grill",
           age: 123,
           description: "ez game ez life",
-          avatar: "http://localhost:8080/image/profile/noAvatar.png",
-          wallpaper: "http://localhost:8080/image/profile/noCover.png",
+          avatar: process.env.BACKEND_URL + "/image/profile/noAvatar.png",
+          wallpaper: process.env.BACKEND_URL + "/image/profile/noAvatar.png",
         },
       },
       posts: {
@@ -35,8 +36,8 @@ async function main() {
           gender: "boy",
           age: 123,
           description: "yeu mau hong ghet su gia doi",
-          avatar: "http://localhost:8080/image/profile/noAvatar.png",
-          wallpaper: "http://localhost:8080/image/profile/noCover.png",
+          avatar: process.env.BACKEND_URL + "/image/profile/noAvatar.png",
+          wallpaper: process.env.BACKEND_URL + "/image/profile/noCover.png",
         },
       },
     },

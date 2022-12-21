@@ -1,7 +1,7 @@
 const db = require("./database");
 const newError = require("../utils/newError");
 const { friendRequest } = require("./database");
-
+require("dotenv").config();
 class userQueries {
   async editProfile(name, description, avatar, wallpaper, id) {
     try {
@@ -23,10 +23,10 @@ class userQueries {
             update: {
               description: description ? description : user.profile.description,
               avatar: avatar
-                ? "http://localhost:8080/image/profile/" + avatar
+                ? process.env.BACKEND_URL + "/image/profile/" + avatar
                 : user.profile.avatar,
               wallpaper: wallpaper
-                ? "http://localhost:8080/image/profile/" + wallpaper
+                ? process.env.BACKEND_URL + "image/profile/" + wallpaper
                 : user.profile.wallpaper,
             },
           },
@@ -220,8 +220,8 @@ class userQueries {
               bio: "nothing",
               gender: gender,
               age: age,
-              avatar: "http://localhost:8080/image/profile/noAvatar.png",
-              wallpaper: "http://localhost:8080/image/profile/noCover.png",
+              avatar: process.env.BACKEND_URL + "/image/profile/noAvatar.png",
+              wallpaper: process.env.BACKEND_URL + "/image/profile/noCover.png",
               description: "i'm human",
             },
           },
@@ -776,7 +776,7 @@ class userQueries {
       (friend) => friend.receiverId
     );
     friendListId.push(userId);
-    friendListId.concat(getFriendRequestSentId);
+    friendListId = friendListId.concat(getFriendRequestSentId);
     const skip = Math.max(0, Math.floor(Math.random() * friendListId.length));
     const user = await db.user.findMany({
       where: {

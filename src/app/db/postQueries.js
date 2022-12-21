@@ -2,6 +2,7 @@ const db = require("./database");
 const newError = require("../utils/newError");
 const path = require("path");
 const fs = require("fs");
+require("dotenv").config();
 class postQueries {
   async getPostById(postId) {
     try {
@@ -86,7 +87,7 @@ class postQueries {
         data: {
           content: content,
           authorId: authorId,
-          attachments: attachment ? "http://localhost:8080" + attachment : null,
+          attachments: attachment ? process.env.BACKEND_URL + attachment : null,
         },
       });
 
@@ -123,7 +124,7 @@ class postQueries {
           if (post.attachments !== null) {
             let target;
             for (let i = post.attachments.length - 1; i >= 0; i--) {
-              if (post.attachments.slice(0, i) === "http://localhost:8080") {
+              if (post.attachments.slice(0, i) === process.env.BACKEND_URL) {
                 target = post.attachments.slice(i);
               }
             }
@@ -162,7 +163,7 @@ class postQueries {
           authorId: authorId,
           content: content,
           postId: postId,
-          attachments: attachment ? "http://localhost:8080" + attachment : null,
+          attachments: attachment ? process.env.BACKEND_URL + attachment : null,
         },
       });
 
