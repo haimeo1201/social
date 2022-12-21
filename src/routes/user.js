@@ -36,4 +36,9 @@ route.post(
   ]),
   userController.editProfile
 );
+route.get(
+  "/getRandomUserNotFriend",
+  isAuth,
+  userController.getRandomUserNotFriend
+);
 module.exports = route;

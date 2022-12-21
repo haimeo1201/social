@@ -18,10 +18,10 @@ class userQueries {
           id: id,
         },
         data: {
-          name: name ? user.name : name,
+          name: name ? name : user.name,
           profile: {
             update: {
-              description: description ? user.profile.description : description,
+              description: description ? description : user.profile.description,
               avatar: avatar
                 ? "http://localhost:8080/image/profile/" + avatar
                 : user.profile.avatar,
@@ -759,6 +759,23 @@ class userQueries {
     } catch (error) {
       throw error;
     }
+  }
+  async getRandomUserNotFriends(userId) {
+    const friendList = await this.getUserFriendList(userId);
+    let friendListId = friendList.map((friend) => friend.id);
+    friendListId.push(userId);
+    const user = await db.user.findMany({
+      where: {
+        id: {
+          notIn: friendListId,
+        },
+      },
+      take: 3,
+      select: {
+        id: true,
+      },
+    });
+    return user;
   }
 }
 

@@ -464,6 +464,18 @@ class userController {
       res.json(error);
     }
   }
+  async getRandomUserNotFriend(req, res) {
+    try {
+      const result = await userQueries.getRandomUserNotFriends(req.id);
+      res.json({
+        error: 0,
+        message: "Get random user successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();
