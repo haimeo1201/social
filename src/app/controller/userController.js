@@ -476,6 +476,18 @@ class userController {
       res.json(error);
     }
   }
+  async getTopUser(req, res) {
+    try {
+      const result = await userQueries.getTopUser();
+      res.json({
+        error: 0,
+        message: "Get top user successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();

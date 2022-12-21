@@ -777,6 +777,24 @@ class userQueries {
     });
     return user;
   }
+  async getTopUser() {
+    try {
+      const user = await db.user.findMany({
+        include: {
+          posts: true,
+        },
+        orderBy: {
+          posts: {
+            _count: "desc",
+          },
+        },
+        take: 3,
+      });
+      return user;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = new userQueries();

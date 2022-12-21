@@ -41,4 +41,5 @@ route.get(
   isAuth,
   userController.getRandomUserNotFriend
 );
+route.get("/getTopUser", userController.getTopUser);
 module.exports = route;

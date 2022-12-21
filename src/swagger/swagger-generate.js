@@ -60,6 +60,13 @@
  *     responses:
  *      200:
  *          description: Get friend request successfully
+ * /api/user/getTopUser:
+ *  get:
+ *     tags: [Users route]
+ *     summary: Get top user
+ *     responses:
+ *       200:
+ *         description: Get top user successfully
  * /api/user/getRandomUserNotFriend:
  *  get:
  *      tags: [Users route]
