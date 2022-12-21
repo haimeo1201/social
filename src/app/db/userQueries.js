@@ -23,11 +23,11 @@ class userQueries {
             update: {
               description: description ? user.profile.description : description,
               avatar: avatar
-                ? user.profile.avatar
-                : "http://localhost:8080/image/profile/" + avatar,
+                ? "http://localhost:8080/image/profile/" + avatar
+                : user.profile.avatar,
               wallpaper: wallpaper
-                ? user.profile.wallpaper
-                : "http://localhost:8080/image/profile/" + wallpaper,
+                ? "http://localhost:8080/image/profile/" + wallpaper
+                : user.profile.wallpaper,
             },
           },
         },
