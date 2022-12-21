@@ -1,6 +1,6 @@
 const express = require("express");
 const route = express.Router();
-
+const upload = require("../app/media/upload");
 const userController = require("../app/controller/userController");
 
 const { isAuth, isAdmin } = require("../app/authentication/authMiddleware");
@@ -26,4 +26,13 @@ route.delete(
 );
 route.post("/getRelationship", isAuth, userController.getRelationship);
 route.post("/getTrendingPost", userController.getTrendingPost);
+route.post(
+  "/editProfile",
+  isAuth,
+  upload.fields([
+    { name: "avatar", maxCount: 1 },
+    { name: "cover", maxCount: 1 },
+  ]),
+  userController.editProfile
+);
 module.exports = route;

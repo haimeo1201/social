@@ -424,6 +424,30 @@ class userController {
       res.json(error);
     }
   }
+  async editProfile(req, res) {
+    try {
+      const avatar = req.files.avatar[0].filename
+        ? req.files.avatar[0].filename
+        : null;
+      const cover = req.files.cover[0].filename
+        ? req.files.cover[0].filename
+        : null;
+      const result = await userQueries.editProfile(
+        req.body.name,
+        req.body.description,
+        avatar,
+        cover,
+        req.id
+      );
+      res.json({
+        error: 0,
+        message: "Edit profile successfully",
+        data: result,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
 
 module.exports = new userController();

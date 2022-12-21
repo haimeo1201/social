@@ -3,6 +3,42 @@ const newError = require("../utils/newError");
 const { friendRequest } = require("./database");
 
 class userQueries {
+  async editProfile(name, description, avatar, cover, id) {
+    try {
+      const user = await db.user.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          profile: true,
+        },
+      });
+      const result = await db.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          name: name || user.name,
+          profile: {
+            update: {
+              description: description || user.profile.description,
+              avatar:
+                "http://localhost:8080/image/profile/" + avatar ||
+                user.profile.avatar,
+              wallpaper:
+                "http://localhost:8080/image/profile/" + cover ||
+                user.profile.wallpaper,
+            },
+          },
+        },
+      });
+      console.log(result);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getTrendingPost(first, last) {
     try {
       const array = await this.getAllPostFromAllUser();

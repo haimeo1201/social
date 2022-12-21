@@ -162,6 +162,29 @@
  *     responses:
  *          200:
  *              description: Get user info successfully
+ * /api/user/editProfile:
+ *   post:
+ *      tags: [Users route]
+ *      summary: Edit profile
+ *      requestBody:
+ *          required: true
+ *          content:
+ *             multipart/form-data:
+ *               schema:
+ *                   type: object
+ *                   properties:
+ *                       type:
+ *                         type: string
+ *                         default: profile
+ *                       avatar:
+ *                         type: string
+ *                         format: binary
+ *                       cover:
+ *                         type: string
+ *                         format: binary
+ *      responses:
+ *          200:
+ *             description: Post successfully
  * /api/user/getTrendingPost:
  *  post:
  *      tags: [Users route]
