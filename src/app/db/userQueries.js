@@ -149,6 +149,15 @@ class userQueries {
         where: {
           senderId: id,
         },
+        include: {
+          receiver: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
       });
       console.log(result);
       return result;
