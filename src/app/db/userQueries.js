@@ -159,7 +159,6 @@ class userQueries {
           },
         },
       });
-      console.log(result);
       return result;
     } catch (error) {
       throw error;
@@ -771,14 +770,21 @@ class userQueries {
   }
   async getRandomUserNotFriends(userId) {
     const friendList = await this.getUserFriendList(userId);
+    let getFriendRequestSent = await this.getSentFriendRequest(userId);
     let friendListId = friendList.map((friend) => friend.id);
+    let getFriendRequestSentId = getFriendRequestSent.map(
+      (friend) => friend.receiverId
+    );
     friendListId.push(userId);
+    friendListId.concat(getFriendRequestSentId);
+    const skip = Math.max(0, Math.floor(Math.random() * friendListId.length));
     const user = await db.user.findMany({
       where: {
         id: {
           notIn: friendListId,
         },
       },
+      skip: skip,
       take: 3,
       select: {
         id: true,
@@ -797,7 +803,7 @@ class userQueries {
             _count: "desc",
           },
         },
-        take: 3,
+        take: 5,
       });
       return user;
     } catch (e) {
