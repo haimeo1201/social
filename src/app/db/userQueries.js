@@ -3,7 +3,7 @@ const newError = require("../utils/newError");
 const { friendRequest } = require("./database");
 
 class userQueries {
-  async editProfile(name, description, avatar, cover, id) {
+  async editProfile(name, description, avatar, wallpaper, id) {
     try {
       const user = await db.user.findUnique({
         where: {
@@ -26,7 +26,7 @@ class userQueries {
                 "http://localhost:8080/image/profile/" + avatar ||
                 user.profile.avatar,
               wallpaper:
-                "http://localhost:8080/image/profile/" + cover ||
+                "http://localhost:8080/image/profile/" + wallpaper ||
                 user.profile.wallpaper,
             },
           },

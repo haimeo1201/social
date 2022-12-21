@@ -31,7 +31,7 @@ route.post(
   isAuth,
   upload.fields([
     { name: "avatar", maxCount: 1 },
-    { name: "cover", maxCount: 1 },
+    { name: "wallpaper", maxCount: 1 },
   ]),
   userController.editProfile
 );

@@ -429,14 +429,14 @@ class userController {
       const avatar = req.files.avatar[0].filename
         ? req.files.avatar[0].filename
         : null;
-      const cover = req.files.cover[0].filename
-        ? req.files.cover[0].filename
+      const wallpaper = req.files.wallpaper[0].filename
+        ? req.files.wallpaper[0].filename
         : null;
       const result = await userQueries.editProfile(
         req.body.name,
         req.body.description,
         avatar,
-        cover,
+        wallpaper,
         req.id
       );
       res.json({

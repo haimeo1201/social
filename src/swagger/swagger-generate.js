@@ -176,10 +176,16 @@
  *                       type:
  *                         type: string
  *                         default: profile
+ *                       name:
+ *                         type: string
+ *                         default: hai
+ *                       description:
+ *                         type: string
+ *                         default: bla
  *                       avatar:
  *                         type: string
  *                         format: binary
- *                       cover:
+ *                       wallpaper:
  *                         type: string
  *                         format: binary
  *      responses:
