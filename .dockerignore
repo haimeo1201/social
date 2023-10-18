@@ -2,6 +2,7 @@
 node_modules/
 someOtherfoler/
 
+
 # Compiled source #
 ###################
 *.com
@@ -25,3 +26,5 @@ someOtherfoler/
 *.rar
 *.tar
 *.zip
+
+.env
